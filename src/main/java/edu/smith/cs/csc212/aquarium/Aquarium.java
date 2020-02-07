@@ -2,6 +2,7 @@ package edu.smith.cs.csc212.aquarium;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import me.jjfoley.gfx.GFX;
 
@@ -41,9 +42,14 @@ public class Aquarium extends GFX {
 		super(WIDTH, HEIGHT);
 	}
 
+	
 	int fish1X = getWidth() + 100;
 	int fish2X = getWidth() + 300;
+	int redfishX = 0;
 
+	Fish nemo = new Fish(Color.pink, 250, 250, true, true);
+	Fish marlin = new Fish(Color.orange, 100, 100, false, true);
+	
 	@Override
 	public void draw(Graphics2D g) {
 		// Draw the "ocean" background.
@@ -51,12 +57,14 @@ public class Aquarium extends GFX {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		// Draw the fish!
+		nemo.draw(g);
+		marlin.draw(g);
 		DrawFish.facingLeft(g, Color.yellow, fish1X, 200);
 		// Draw the confused fish!
 		DrawFish.facingRight(g, Color.green, fish2X, 300);
 
 		// What if we wanted this little fish to swim, too?
-		DrawFish.smallFacingLeft(g, Color.red, 200, 100);
+		DrawFish.smallFacingRight(g, Color.red, redfishX, 100);
 
 		// Draw our snail!
 		algorithm.draw(g);
@@ -64,6 +72,11 @@ public class Aquarium extends GFX {
 		// Move the fish!
 		fish1X -= 1;
 		fish2X -= 2;
+		redfishX += 4;
+		
+		if (redfishX > getWidth() + 100) {
+			redfishX = -100;
+		}
 	}
 
 	public static void main(String[] args) {
